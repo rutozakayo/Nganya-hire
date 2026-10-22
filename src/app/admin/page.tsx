@@ -4,9 +4,10 @@ import { users, driverProfiles, vehicles, bookings, vehicleOwners } from "@/db/s
 import { count, eq } from "drizzle-orm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { Users, Car, ShieldCheck, CalendarRange } from "lucide-react";
 
-export default async function AdminDashboard() {
+async function AdminDashboardContent() {
   const session = await auth();
   if ((session?.user as any)?.role !== "admin") redirect("/");
 
@@ -65,5 +66,13 @@ export default async function AdminDashboard() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function AdminDashboard() {
+  return (
+    <Suspense fallback={<div className="container mx-auto min-h-[40vh] px-4 py-12" aria-hidden="true" />}>
+      <AdminDashboardContent />
+    </Suspense>
   );
 }

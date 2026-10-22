@@ -250,6 +250,13 @@ export const vehiclesRelations = relations(vehicles, ({ one, many }) => ({
   bookings: many(bookings),
 }));
 
+export const vehicleImagesRelations = relations(vehicleImages, ({ one }) => ({
+  vehicle: one(vehicles, {
+    fields: [vehicleImages.vehicleId],
+    references: [vehicles.id],
+  }),
+}));
+
 export const driverProfilesRelations = relations(driverProfiles, ({ one, many }) => ({
   user: one(users, {
     fields: [driverProfiles.userId],
