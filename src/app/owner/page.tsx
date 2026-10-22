@@ -40,13 +40,13 @@ export default async function OwnerDashboard() {
     where: eq(bookings.vehicleId, vehicleIds[0]),
     orderBy: [desc(bookings.createdAt)],
     with: {
-      vehicleId: true,
-      customerId: {
+      vehicle: true,
+      customer: {
         with: {
-          userId: true
+          user: true
         }
       },
-      driverId: {
+      driver: {
         with: {
           user: true
         }
@@ -75,7 +75,7 @@ export default async function OwnerDashboard() {
                 <div className="flex flex-col md:flex-row justify-between gap-6">
                   <div className="space-y-4 flex-1">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-bold">{(booking.vehicleId as any).name}</h3>
+                      <h3 className="text-lg font-bold">{(booking as any).vehicle?.name ?? "Nganya"}</h3>
                       <Badge className={booking.status === "approved" ? "bg-green-500" : "bg-primary"}>
                         {booking.status.toUpperCase()}
                       </Badge>
@@ -83,9 +83,9 @@ export default async function OwnerDashboard() {
 
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center text-muted-foreground"><Calendar className="mr-2 h-4 w-4 text-primary" /> {format(new Date(booking.startDate), "PPP")}</div>
-                      <div className="flex items-center text-muted-foreground"><User className="mr-2 h-4 w-4 text-primary" /> Customer: {(booking.customerId as any).userId.name}</div>
+                      <div className="flex items-center text-muted-foreground"><User className="mr-2 h-4 w-4 text-primary" /> Customer: {(booking as any).customer?.user?.name ?? "Customer"}</div>
                       <div className="flex items-center text-muted-foreground"><MapPin className="mr-2 h-4 w-4 text-primary" /> {booking.pickupLocation}</div>
-                      <div className="flex items-center text-muted-foreground"><CheckCircle className="mr-2 h-4 w-4 text-accent" /> Driver: {(booking.driverId as any).user.name}</div>
+                      <div className="flex items-center text-muted-foreground"><CheckCircle className="mr-2 h-4 w-4 text-accent" /> Driver: {(booking as any).driver?.user?.name ?? "Unassigned"}</div>
                     </div>
                   </div>
 

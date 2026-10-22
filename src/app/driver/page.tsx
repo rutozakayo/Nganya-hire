@@ -33,10 +33,10 @@ export default async function DriverDashboard() {
     where: eq(bookings.driverId, driverProfile.id),
     orderBy: [desc(bookings.createdAt)],
     with: {
-      vehicleId: true,
-      customerId: {
+      vehicle: true,
+      customer: {
         with: {
-          userId: true
+          user: true
         }
       }
     }
@@ -84,7 +84,7 @@ export default async function DriverDashboard() {
                     <div className="flex flex-col md:flex-row justify-between gap-6">
                       <div className="space-y-4 flex-1">
                         <div className="flex items-center justify-between">
-                          <h3 className="text-lg font-bold">{(booking.vehicleId as any).name}</h3>
+                          <h3 className="text-lg font-bold">{(booking as any).vehicle?.name ?? "Nganya"}</h3>
                           <Badge className="bg-primary/20 text-primary border-primary/50">{booking.status.toUpperCase()}</Badge>
                         </div>
                         
@@ -103,7 +103,7 @@ export default async function DriverDashboard() {
                           </div>
                           <div className="flex items-center text-muted-foreground">
                             <User className="mr-2 h-4 w-4 text-primary" />
-                            {(booking.customerId as any).userId.name}
+                            {(booking as any).customer?.user?.name ?? "Customer"}
                           </div>
                         </div>
 

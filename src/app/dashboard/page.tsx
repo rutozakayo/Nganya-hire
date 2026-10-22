@@ -55,8 +55,8 @@ export default async function CustomerDashboard() {
     where: eq(bookings.customerId, profile.id),
     orderBy: [desc(bookings.createdAt)],
     with: {
-      vehicleId: { with: { images: true } },
-      driverId: { with: { user: true } },
+      vehicle: { with: { images: true } },
+      driver: { with: { user: true } },
     },
   });
 
@@ -77,9 +77,9 @@ export default async function CustomerDashboard() {
   );
 
   const renderBooking = (booking: (typeof myBookings)[number]) => {
-    const vehicle = booking.vehicleId as any;
+    const vehicle = (booking as any).vehicle;
     const mainImage = vehicle?.images?.find((i: any) => i.isMain)?.url || vehicle?.images?.[0]?.url;
-    const driverName = (booking.driverId as any)?.user?.name;
+    const driverName = (booking as any).driver?.user?.name;
 
     return (
       <Card key={booking.id} className="overflow-hidden border-border/50 bg-card/30">
@@ -129,7 +129,7 @@ export default async function CustomerDashboard() {
 
             <div className="shrink-0">
               <Link
-                href={`/nganya/${booking.vehicleId ? (booking.vehicleId as any).id : ""}`}
+                href={`/nganya/${(booking as any).vehicle?.id ?? ""}`}
                 className={buttonVariants({ variant: "outline", className: "border-primary/30" })}
               >
                 View Nganya

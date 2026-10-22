@@ -266,3 +266,45 @@ export const driverProfilesRelations = relations(driverProfiles, ({ one, many })
   availability: many(driverAvailability),
   bookings: many(bookings),
 }));
+
+export const customerProfilesRelations = relations(customerProfiles, ({ one, many }) => ({
+  user: one(users, {
+    fields: [customerProfiles.userId],
+    references: [users.id],
+  }),
+  bookings: many(bookings),
+}));
+
+export const vehicleOwnersRelations = relations(vehicleOwners, ({ one, many }) => ({
+  user: one(users, {
+    fields: [vehicleOwners.userId],
+    references: [users.id],
+  }),
+  vehicles: many(vehicles),
+}));
+
+export const vehicleDriversRelations = relations(vehicleDrivers, ({ one }) => ({
+  vehicle: one(vehicles, {
+    fields: [vehicleDrivers.vehicleId],
+    references: [vehicles.id],
+  }),
+  driver: one(driverProfiles, {
+    fields: [vehicleDrivers.driverId],
+    references: [driverProfiles.id],
+  }),
+}));
+
+export const bookingsRelations = relations(bookings, ({ one }) => ({
+  vehicle: one(vehicles, {
+    fields: [bookings.vehicleId],
+    references: [vehicles.id],
+  }),
+  customer: one(customerProfiles, {
+    fields: [bookings.customerId],
+    references: [customerProfiles.id],
+  }),
+  driver: one(driverProfiles, {
+    fields: [bookings.driverId],
+    references: [driverProfiles.id],
+  }),
+}));
