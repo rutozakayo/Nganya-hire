@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -34,8 +35,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground min-h-full flex flex-col`}
       >
         <ServiceWorkerRegister />
-        <Navbar />
-        <main className="flex-1">{children}</main>
+        <Suspense fallback={<div className="h-16" aria-hidden="true" />}>
+          <Navbar />
+        </Suspense>
+        <main className="flex-1">
+          <Suspense fallback={<div className="min-h-[40vh]" aria-hidden="true" />}>
+            {children}
+          </Suspense>
+        </main>
         <PWAInstaller />
         <footer className="border-t border-border bg-card py-12">
           <div className="container mx-auto px-4">
