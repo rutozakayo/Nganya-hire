@@ -61,8 +61,7 @@ await check("customer signup", async (page) => {
   await page.fill("#confirmPassword", "testpass123");
   await page.click('button[type="submit"]');
   await page.waitForURL("**/dashboard", { timeout: 25000 });
-  const text = await page.innerText("body");
-  if (!text.includes("Karibu")) throw new Error("dashboard greeting missing");
+  await page.getByText("Karibu").first().waitFor({ timeout: 20000 });
   return "signed up and landed on /dashboard";
 });
 
@@ -77,8 +76,7 @@ await check("driver signup", async (page) => {
   await page.fill("#password", "testpass123");
   await page.click('button[type="submit"]');
   await page.waitForURL("**/driver", { timeout: 25000 });
-  const text = await page.innerText("body");
-  if (!text.includes("PENDING")) throw new Error("pending verification badge missing");
+  await page.getByText("PENDING").first().waitFor({ timeout: 20000 });
   return "applied and landed on /driver (PENDING)";
 });
 
