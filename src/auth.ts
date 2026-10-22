@@ -6,7 +6,15 @@ import Credentials from "next-auth/providers/credentials";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
+const authSecret =
+  process.env.AUTH_SECRET ??
+  process.env.NEXTAUTH_SECRET ??
+  (process.env.NODE_ENV === "development"
+    ? "nganya-hire-local-development-only-secret"
+    : undefined);
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: authSecret,
   adapter: DrizzleAdapter(db),
   providers: [
     Credentials({
