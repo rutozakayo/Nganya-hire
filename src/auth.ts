@@ -15,6 +15,7 @@ const authSecret =
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: authSecret,
+  trustHost: true,
   adapter: DrizzleAdapter(db),
   providers: [
     Credentials({

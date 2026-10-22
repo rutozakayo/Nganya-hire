@@ -62,6 +62,7 @@ export default async function RootLayout({
                   <li><a href="/how-it-works" className="hover:text-primary">How It Works</a></li>
                   <li><a href="/register" className="hover:text-primary">Join as Customer</a></li>
                   <li><a href="/owner/register" className="hover:text-primary">List Your Vehicle</a></li>
+                  <li><a href="/driver/register" className="hover:text-primary">Drive With Us</a></li>
                 </ul>
               </div>
               <div>
