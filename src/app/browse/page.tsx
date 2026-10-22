@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { db } from "@/db";
 import { VehicleCard } from "@/components/vehicle-card";
 import { Input } from "@/components/ui/input";

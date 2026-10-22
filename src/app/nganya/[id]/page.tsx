@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { db } from "@/db";
 import { vehicles, vehicleImages, driverProfiles, users, vehicleDrivers } from "@/db/schema";
 import { eq } from "drizzle-orm";

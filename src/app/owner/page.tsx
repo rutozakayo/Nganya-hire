@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { db } from "@/db";
 import { auth } from "@/auth";
 import { bookings, vehicles, vehicleOwners, customerProfiles, users } from "@/db/schema";
