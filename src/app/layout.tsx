@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { CurrentYear } from "@/components/current-year";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,7 +45,7 @@ export default function RootLayout({
                   NGANYA<span className="text-secondary">HIRE</span>
                 </span>
                 <p className="text-sm text-muted-foreground">
-                  The ultimate platform for discovering and hiring Kenya's most iconic matatus. Experience the culture.
+                  The ultimate platform for discovering and hiring Kenya&apos;s most iconic matatus. Experience the culture.
                 </p>
               </div>
               <div>
@@ -76,7 +77,7 @@ export default function RootLayout({
               </div>
             </div>
             <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-              © {new Date().getFullYear()} NGANYA HIRE. All rights reserved. Made in Nairobi.
+              © <CurrentYear /> NGANYA HIRE. All rights reserved. Made in Nairobi.
             </div>
           </div>
         </footer>
