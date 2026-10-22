@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { auth, signOut } from "@/auth";
 import {
@@ -11,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut, User, LayoutDashboard, Car, Shield } from "lucide-react";
 
 export async function Navbar() {
+  await connection();
   const session = await auth();
 
   return (

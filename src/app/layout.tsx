@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { CurrentYear } from "@/components/current-year";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -33,8 +35,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground min-h-full flex flex-col`}
       >
         <ServiceWorkerRegister />
-        <Navbar />
-        <main className="flex-1">{children}</main>
+        <Suspense fallback={<div className="h-16" aria-hidden="true" />}>
+          <Navbar />
+        </Suspense>
+        <main className="flex-1">
+          <Suspense fallback={<div className="min-h-[40vh]" aria-hidden="true" />}>
+            {children}
+          </Suspense>
+        </main>
         <PWAInstaller />
         <footer className="border-t border-border bg-card py-12">
           <div className="container mx-auto px-4">
@@ -44,7 +52,7 @@ export default function RootLayout({
                   NGANYA<span className="text-secondary">HIRE</span>
                 </span>
                 <p className="text-sm text-muted-foreground">
-                  The ultimate platform for discovering and hiring Kenya's most iconic matatus. Experience the culture.
+                  The ultimate platform for discovering and hiring Kenya&apos;s most iconic matatus. Experience the culture.
                 </p>
               </div>
               <div>
@@ -76,7 +84,7 @@ export default function RootLayout({
               </div>
             </div>
             <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-              © {new Date().getFullYear()} NGANYA HIRE. All rights reserved. Made in Nairobi.
+              © <CurrentYear /> NGANYA HIRE. All rights reserved. Made in Nairobi.
             </div>
           </div>
         </footer>
